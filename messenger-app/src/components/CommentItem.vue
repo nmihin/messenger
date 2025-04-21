@@ -10,23 +10,26 @@
         <div class="bg-white p-3 rounded-lg shadow-sm">
           <div class="flex items-center gap-2">
             <span class="font-semibold text-gray-800">{{ comment.author.name }}</span>
-            <span class="text-xs text-gray-500">{{ formattedTime }}</span>
           </div>
-          <p class="mt-1 text-gray-700">{{ comment.text }}</p>
-          <button 
-            @click="replying = !replying" 
-            class="mt-2 text-xs text-blue-500 hover:text-blue-700"
-          >
-            {{ replying ? 'Cancel' : 'Reply' }}
-          </button>
+          <div class="flex items-center justify-between mt-1">
+            <p class="text-gray-700">{{ comment.text }}</p>
+          </div>
         </div>
-        
+        <div class="flex items-center gap-2 ml-2 mt-2">
+              <span class="text-xs text-gray-500">{{ formattedTime }}</span>
+              <button 
+                @click="replying = !replying" 
+                class="text-xs text-blue-500 hover:text-blue-700"
+              >
+                {{ replying ? 'Cancel' : `Reply${comment.children?.length ? ` (${comment.children.length})` : ''}` }}
+              </button>
+        </div>
         <!-- Reply Form -->
         <div v-if="replying" class="mt-2 pl-10">
           <CommentInput 
             @submit="submitReply" 
             @typing="onTyping"
-            class="bg-gray-50 rounded-lg"
+            class="rounded-lg"
           />
         </div>
       </div>
@@ -65,7 +68,10 @@ function onTyping(val: boolean) {
   isTyping.value = val
 }
 
-const formattedTime = computed(() =>
-  new Date(props.comment.timestamp).toLocaleString()
-)
+const formattedTime = computed(() => {
+  return new Date(props.comment.timestamp).toLocaleTimeString([], { 
+    hour: '2-digit', 
+    minute: '2-digit' 
+  })
+})
 </script>
