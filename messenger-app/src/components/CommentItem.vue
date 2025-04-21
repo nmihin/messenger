@@ -12,7 +12,7 @@
       </div>
       
       <div class="flex-1">
-        <div class="bg-white p-3 rounded-lg shadow-sm">
+        <div class="bg-white p-3 rounded-lg shadow-sm max-w-[500px]">
           <div class="flex items-center gap-2">
             <span class="font-semibold text-gray-800">{{ comment.author.name }}</span>
           </div>
@@ -30,7 +30,7 @@
           </button>
         </div>
         <!-- Reply Form -->
-        <div v-if="replying" class="mt-2 pl-10">
+        <div v-if="replying" class="mt-2 pl-10 ">
           <CommentInput 
             @submit="submitReply" 
             @typing="onTyping"
@@ -70,7 +70,9 @@ const emit = defineEmits<{ (e: 'add-reply', payload: { text: string; parentId: s
 const replying = ref(false)
 const isTyping = ref(false)
 
-function formatCommentText(text: string) {
+function formatCommentText(text?: string) {
+  if (!text) return '';  // Return empty string if text is undefined/null
+  
   // Convert URLs to clickable links
   const urlRegex = /(https?:\/\/[^\s]+)/g
   return text.replace(urlRegex, url => {
