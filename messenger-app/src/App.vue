@@ -1,13 +1,13 @@
 <template>
-  <div class="min-h-screen bg-blue-500 p-4">
-    <div class="max-w-2xl pt-4 mx-auto bg-gray-100 rounded-xl shadow-lg overflow-hidden relative">
+  <div class="min-h-screen bg-primary-500 flex justify-center items-start px-4 py-4 w-[100vw]">
+    <div class="w-full max-w-2xl bg-gray-100 rounded-xl shadow-lg overflow-hidden relative">
       <!-- Header with dynamic date -->
-      <div class="text-gray text-center text-sm py-4">
+      <div class="text-neutral-900 text-center text-sm py-4">
         {{ formattedDate }}
       </div>
       
       <!-- Messages List -->
-      <div class="p-4 space-y-4 max-h-[70vh] overflow-y-auto pb-20">
+      <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto pb-20">
         <CommentList 
           :comments="commentsTree" 
           @add-comment="handleAddComment" 
@@ -15,7 +15,7 @@
       </div>
       
       <!-- Input Area -->
-      <div class="p-4 p-4 absolute w-full bottom-0">
+      <div class="p-4 absolute w-full bottom-0 z-20">
         <CommentInput @submit="handleAddComment" />
       </div>
     </div>

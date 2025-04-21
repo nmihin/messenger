@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
+body {
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
 #app {
   max-width: 100%;
   margin: 0 auto;
@@ -24,15 +29,22 @@ a,
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+::-webkit-scrollbar-track {
+  background: #ECEEF1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #82878D;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6D7177;
 }
