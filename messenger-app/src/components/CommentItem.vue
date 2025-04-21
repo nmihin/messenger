@@ -70,10 +70,9 @@ const emit = defineEmits<{ (e: 'add-reply', payload: { text: string; parentId: s
 const replying = ref(false)
 const isTyping = ref(false)
 
-function formatCommentText(text?: string) {
-  if (!text) return '';  // Return empty string if text is undefined/null
+function formatCommentText(text: unknown) {
+  if (typeof text !== 'string') return ''
   
-  // Convert URLs to clickable links
   const urlRegex = /(https?:\/\/[^\s]+)/g
   return text.replace(urlRegex, url => {
     return `<a href="${url}" class="text-primary-500 hover:underline" target="_blank" rel="noopener noreferrer">${url}</a>`

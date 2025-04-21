@@ -35,13 +35,16 @@ const commentsTree = ref<Comment[]>(buildCommentTree(flatComments.value))
 
 // Format current date using Moment.js
 const formattedDate = computed(() => {
-  return moment().format('dddd, DD.MM.YYYY') // Tuesday, 13.12.2020
+  return moment().format('dddd, DD.MM.YYYY')
 })
 
-function handleAddComment({ text, parentId = null }: { text: string; parentId?: string | null }) {
+
+function handleAddComment(payload: { text: string | { text: string }; parentId: string | null }) {
+  const text = typeof payload.text === 'string' ? payload.text : payload.text.text
+
   const newComment: Comment = {
     id: Date.now().toString(),
-    parent_id: parentId,
+    parent_id: payload.parentId ?? null,
     author: {
       name: 'Current User',
       picture: 'img/ivan.png'
@@ -54,4 +57,5 @@ function handleAddComment({ text, parentId = null }: { text: string; parentId?: 
   flatComments.value.push(newComment)
   commentsTree.value = buildCommentTree(flatComments.value)
 }
+
 </script>

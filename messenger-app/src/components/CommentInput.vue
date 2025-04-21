@@ -3,6 +3,7 @@
     <input
       v-model="input"
       @input="onInput"
+      @keydown.enter="submit"
       placeholder="...type something"
    class="w-full border border-neutral-100 rounded-[5px] px-4 py-4 pr-16 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-xs placeholder:font-bold text-sm text-neutral-500"
     />
@@ -21,7 +22,7 @@
 import { ref } from 'vue'
 
 const emit = defineEmits<{
-  (e: 'submit', value: string): void
+  (e: 'submit', value: { text: string; parentId: string | null }): void
   (e: 'typing', value: boolean): void
 }>()
 
@@ -29,8 +30,7 @@ const input = ref('')
 
 function submit() {
   if (input.value.trim()) {
-    emit('submit', input.value.trim())
-    emit('typing', false)
+    emit('submit', { text: input.value.trim(), parentId: null })
     input.value = ''
   }
 }
