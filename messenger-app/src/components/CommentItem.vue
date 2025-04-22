@@ -1,11 +1,10 @@
 <template>
-  <div class="mb-4">
-    <!-- Main Comment -->
+  <div class="mb-8">
     <div class="flex gap-3">
-      <!-- Avatar with connector lines -->
       <div class="relative">
         <div 
-          class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white font-semibold relative z-10"
+          class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold relative z-10"
+          :style="{ backgroundColor: getAvatarColor(comment.author.name) }"
         >
           <span>{{ comment.author.name.charAt(0) }}</span>
         </div>
@@ -14,7 +13,7 @@
       <div class="flex-1">
         <div class="bg-white p-3 rounded-lg shadow-sm max-w-[500px]">
           <div class="flex items-center gap-2">
-            <span class="font-semibold text-gray-800">{{ comment.author.name }}</span>
+            <span class="font-medium text-gray-800 text-sm">{{ comment.author.name }}</span>
           </div>
           <div class="flex items-center justify-between mt-1">
             <p class="text-sm text-neutral-500" v-html="formatCommentText(comment.text)"></p>
@@ -24,7 +23,7 @@
           <span class="text-xs text-gray-500">{{ formattedTime }}</span>
           <button 
             @click="replying = !replying" 
-            class="text-xs text-primary-500 hover:text-blue-700"
+            class="text-xs text-primary-700 hover:text-blue-700 font-medium"
           >
             {{ replying ? 'Cancel' : `Reply${comment.children?.length ? ` (${comment.children.length})` : ''}` }}
           </button>
@@ -32,7 +31,7 @@
         <!-- Reply Form -->
         <div v-if="replying" class="mt-2 pl-10 ">
           <CommentInput 
-            @submit="submitReply" 
+            @submit="(payload) => submitReply(payload.text)" 
             @typing="onTyping"
             class="rounded-lg"
           />
@@ -40,12 +39,10 @@
       </div>
     </div>
     
-    <!-- Nested Replies with L-shaped connector -->
     <div 
       v-if="comment.children?.length" 
       class="mt-2 ml-5 pl-10 relative"
     >
-      <!-- Horizontal connector line -->
       <div 
         class="absolute top-5 left-0 w-5 h-px bg-neutral-500 vertical-line"
       ></div>
@@ -70,12 +67,25 @@ const emit = defineEmits<{ (e: 'add-reply', payload: { text: string; parentId: s
 const replying = ref(false)
 const isTyping = ref(false)
 
+const avatarColors = ['#B62323', '#23B632', '#B3B623']
+
+function getAvatarColor(name: string): string {
+  if (!name) return avatarColors[0]
+  
+  let hash = 0
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash)
+  }
+  const index = Math.abs(hash) % avatarColors.length
+  return avatarColors[index]
+}
+
 function formatCommentText(text: unknown) {
   if (typeof text !== 'string') return ''
   
   const urlRegex = /(https?:\/\/[^\s]+)/g
   return text.replace(urlRegex, url => {
-    return `<a href="${url}" class="text-primary-500 hover:underline" target="_blank" rel="noopener noreferrer">${url}</a>`
+    return `<a href="${url}" class="text-primary-700 hover:underline" target="_blank" rel="noopener noreferrer">${url}</a>`
   })
 }
 
@@ -109,7 +119,6 @@ const formattedTime = computed(() => {
   min-height: 49px;
 }
 
-/* Style for links in comments */
 .text-blue-500 {
   color: #3b82f6;
 }

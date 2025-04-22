@@ -5,11 +5,11 @@
       @input="onInput"
       @keydown.enter="submit"
       placeholder="...type something"
-   class="w-full border border-neutral-100 rounded-[5px] px-4 py-4 pr-16 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-xs placeholder:font-bold text-sm text-neutral-500"
+   class="shadow-custom w-full border border-neutral-100 rounded-[5px] px-4 py-4 pr-16 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-xs placeholder:font-bold text-sm text-neutral-500"
     />
     <button 
       @click="submit" 
-      class="absolute right-3 top-1/2 -translate-y-1/2 bg-neutral-100 text-neutral-dark px-4 py-1 rounded-[5px] hover:bg-opacity-80 transition flex items-center justify-center border border-neutral-light mr-6 text-xs font-bold py-2 px-4 rounded min-w-[80px]"
+      class="absolute right-3 top-1/2 -translate-y-1/2 bg-neutral-100 text-neutral-dark hover:bg-opacity-80 transition flex items-center justify-center border border-neutral-light mr-6 text-xs font-bold py-2 px-4 rounded min-w-[80px]"
       :disabled="!input.trim()"
       :class="{ 'opacity-50 cursor-not-allowed': !input.trim() }"
     >

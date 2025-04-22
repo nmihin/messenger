@@ -1,21 +1,17 @@
 <template>
-  <div class="min-h-screen bg-primary-500 flex justify-center items-start px-4 py-4 w-[100vw]">
-    <div class="w-full max-w-[798px] bg-gray-100 rounded-xl shadow-lg overflow-hidden relative">
-      <!-- Header with dynamic date -->
-      <div class="text-neutral-900 text-center text-sm py-4">
+  <div class="min-h-screen bg-primary-500 flex justify-center items-center px-4 py-4">
+    <div class="w-full max-w-[798px] bg-gray-100 rounded-xl shadow-lg overflow-hidden flex flex-col" style="height: 90vh;">
+      <div class="text-neutral-900 text-center text-sm py-4 flex-shrink-0 mt-4">
         {{ formattedDate }}
       </div>
-      
-      <!-- Messages List -->
-      <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto pb-20 mr-4">
+      <div class="px-6 flex-grow overflow-y-auto mr-4">
         <CommentList 
           :comments="commentsTree" 
           @add-comment="handleAddComment" 
+          class="space-y-4 pb-4"
         />
       </div>
-      
-      <!-- Input Area -->
-      <div class="p-4 absolute w-full bottom-0 z-20">
+      <div class="p-4 flex-shrink-0 bg-transparent">
         <CommentInput @submit="handleAddComment" />
       </div>
     </div>
@@ -38,7 +34,6 @@ const formattedDate = computed(() => {
   return moment().format('dddd, DD.MM.YYYY')
 })
 
-
 function handleAddComment(payload: { text: string | { text: string }; parentId: string | null }) {
   const text = typeof payload.text === 'string' ? payload.text : payload.text.text
 
@@ -57,5 +52,4 @@ function handleAddComment(payload: { text: string | { text: string }; parentId: 
   flatComments.value.push(newComment)
   commentsTree.value = buildCommentTree(flatComments.value)
 }
-
 </script>
