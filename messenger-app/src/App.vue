@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-primary-500 flex justify-center items-center px-4 py-4">
     <div class="w-full max-w-[798px] bg-gray-100 rounded-xl shadow-lg overflow-hidden flex flex-col" style="height: 90vh;">
-      <div class="text-neutral-900 text-center text-sm py-4 flex-shrink-0 mt-4">
+      <div class="text-neutral-900 text-center text-sm py-8 flex-shrink-0">
         {{ formattedDate }}
       </div>
       <div class="px-6 flex-grow overflow-y-auto mr-4">
